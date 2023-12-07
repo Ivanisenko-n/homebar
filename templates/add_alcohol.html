@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавить Алкоголь</title>
+</head>
+<body>
+    {% include "menu.html" %}
+
+    <h1>Добавить Алкоголь</h1>
+    <form method="POST">
+        <label for="original_name">Оригинальное название:</label>
+        <input type="text" name="original_name" required><br><br>
+
+        <label for="russian_name">Название на русском:</label>
+        <input type="text" name="russian_name" required><br><br>
+
+        <label for="common_name">Общее название:</label>
+        <input type="text" name="common_name" required><br><br>
+
+        <label for="category">Категория:</label>
+        <select id="category" name="category" required>
+            {% for category in category_list %}
+                <option value="{{ category.name }}">{{ category.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="alcohol_content">Крепость:</label>
+        <input type="text" name="alcohol_content" required><br><br>
+
+        <label for="description">Описание:</label>
+        <textarea name="description" rows="4" cols="50" required></textarea><br><br>
+
+        <button type="submit">OK</button>
+    </form>
+</body>
+</html>

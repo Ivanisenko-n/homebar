@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongodb_bar
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: bar_user
+      MONGO_INITDB_ROOT_PASSWORD: 12345678
+    networks:
+      - mongo_network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_bar
+    ports:
+      - "80:80"
+    links:
+      - mongo
+    networks:
+      - mongo_network
+
+networks:
+  mongo_network:

@@ -1,0 +1,46 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Главная страница</title>
+</head>
+<body>
+    {% include "menu.html" %}
+
+    <h2>Сохраненные данные:</h2>
+    <ul>
+        {% for data in data_list %}
+            <li>
+                <strong>Оригинальное название:</strong> {{ data.original_name }}<br>
+                <strong>Название на русском:</strong> {{ data.russian_name }}<br>
+                <strong>Общее название:</strong> {{ data.common_name }}<br>
+                <strong>Тип:</strong> {{ data.type }}<br>
+                <strong>Крепость:</strong> {{ data.alcohol_content }}<br>
+                <strong>Описание:</strong> {{ data.description }}<br>
+                <button class="delete-button" data-id="{{ data._id }}">Удалить</button>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        document.querySelectorAll('.delete-button').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var id = this.getAttribute('data-id');
+                deleteAlcohol(id);
+            });
+        });
+
+        function deleteAlcohol(id) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/delete_alcohol/' + id, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Обновите страницу после удаления (перезагрузка страницы)
+                    window.location.reload();
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
